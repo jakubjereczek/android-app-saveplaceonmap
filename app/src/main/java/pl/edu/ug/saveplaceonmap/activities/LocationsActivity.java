@@ -1,14 +1,16 @@
-package pl.edu.ug.saveplaceonmap;
+package pl.edu.ug.saveplaceonmap.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import pl.edu.ug.saveplaceonmap.R;
+
+public class LocationsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_locations);
     }
 }

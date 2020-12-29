@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Save place on map</string>
+    <string name="map">Wyświetl mape</string>
+    <string name="locations">Wyświetl zapisane lokalizacje</string>
 </resources>

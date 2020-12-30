@@ -2,4 +2,6 @@
     <string name="app_name">Save place on map</string>
     <string name="map">Wyświetl mape</string>
     <string name="locations">Wyświetl zapisane lokalizacje</string>
+    <string name="add_new">Dodaj nowa lokalizacje do listy</string>
+    <string name="addBtn">Dodaj</string>
 </resources>

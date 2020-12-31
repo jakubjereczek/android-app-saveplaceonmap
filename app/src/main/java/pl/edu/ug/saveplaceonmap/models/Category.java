@@ -5,7 +5,10 @@ import pl.edu.ug.saveplaceonmap.utils.Consts;
 public enum Category {
     FUN(""+ Consts.FUN_DESCRIBE),
     MY_FAVOURITE_PLACES(""+Consts.MY_FAVOURITE_PLACES_DESCRIBE),
-    HOME(""+Consts.HOME_DESCRIBE);
+    HOME(""+Consts.HOME_DESCRIBE),
+    GROCERIES(""+ Consts.GROCERIES_DESCRIBE),
+    RESTAURANTS(""+Consts.RESTAURANTS_DESCRIBE),
+    PLACES(""+Consts.PLACES_DESCRIBE);
 
     private String description;
 
@@ -25,6 +28,12 @@ public enum Category {
                 return MY_FAVOURITE_PLACES;
             case Consts.HOME_DESCRIBE:
                 return HOME;
+            case Consts.GROCERIES_DESCRIBE:
+                return GROCERIES;
+            case Consts.RESTAURANTS_DESCRIBE:
+                return RESTAURANTS;
+            case Consts.PLACES_DESCRIBE:
+                return PLACES;
         }
         return null;
     }

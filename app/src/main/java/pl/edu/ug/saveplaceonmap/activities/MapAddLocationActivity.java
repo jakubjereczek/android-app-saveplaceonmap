@@ -13,6 +13,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.gson.GsonBuilder;
 
@@ -26,12 +27,13 @@ public class MapAddLocationActivity extends AppCompatActivity {
     EditText description;
     Spinner category;
     Button button;
+    TextView errorMessage;
 
     float x, y;
 
     String selectedCategory = null;
 
-    private String[] categories = new String[] { Category.FUN.getDescription(), Category.MY_FAVOURITE_PLACES.getDescription(), Category.HOME.getDescription() };
+    private String[] categories = new String[] { Category.FUN.getDescription(), Category.MY_FAVOURITE_PLACES.getDescription(), Category.HOME.getDescription(), Category.GROCERIES.getDescription(), Category.RESTAURANTS.getDescription(), Category.PLACES.getDescription()};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class MapAddLocationActivity extends AppCompatActivity {
         title = findViewById(R.id.titleET);
         description = findViewById(R.id.descriptionET);
         category = findViewById(R.id.categorySpinner);
+        errorMessage = findViewById(R.id.errorMessageTV);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, categories);
         category.setAdapter(adapter);
@@ -55,12 +58,9 @@ public class MapAddLocationActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // do uzupelnienia
-                selectedCategory = categories[0];
             }
 
         });
-
         button = findViewById(R.id.button);
     }
 
@@ -68,11 +68,8 @@ public class MapAddLocationActivity extends AppCompatActivity {
     public void addHandler(View view) {
         String titleString = title.getText().toString(),
                 descriptionString = description.getText().toString();
-        Log.i("dane", titleString + "" +descriptionString);
-        Log.i("dane", selectedCategory.toString());
-
+        errorMessage.setText("");
         if (!titleString.isEmpty() && !descriptionString.isEmpty() && !selectedCategory.isEmpty()) {
-            Log.i("dane", "yest");
             Category category = Category.findByDescription(selectedCategory);
             Location location = new Location(x,y,titleString,descriptionString, category);
 
@@ -86,9 +83,40 @@ public class MapAddLocationActivity extends AppCompatActivity {
             startActivity(i);
 
         }else {
-            Log.i("dane", "not");
-
-            // komunikat o niepoprawnych danych
+            // Wiadomość o niepoprawnym formularzu
+            int incorrectFields = 0;
+            String[] fields = new String[3];
+            if (titleString.isEmpty() || titleString.length() < 3) {
+                fields[0] = "tytuł";
+                incorrectFields++;
+            }
+            if (descriptionString.isEmpty() || descriptionString.length() < 3) {
+                fields[1] = "opis";
+                incorrectFields++;
+            }
+            if (selectedCategory.isEmpty() || selectedCategory.length() < 3) {
+                fields[2] = "kategoria";
+                incorrectFields++;
+            }
+            String errorMessageBuilder = "";
+            if (incorrectFields > 1) {
+                errorMessageBuilder = "Pola";
+            }else{
+                errorMessageBuilder = "Pole";
+            }
+            for (int i = 0; i<fields.length; i++) {
+                if (fields[i] != "" && fields[i] != null) {
+                    errorMessageBuilder += " "+fields[i];
+                    if (i<(incorrectFields - 1))
+                        errorMessageBuilder += ",";
+                }
+            }
+            if (incorrectFields > 1) {
+                errorMessageBuilder += " są puste albo wartość jest krótsza niż 3 znaki. Uzupełnij je aby dodać punkt na mapie";
+            }else{
+                errorMessageBuilder += " jest puste albo wartość jest krótsza niz 3 znaki. Uzupełnij pole aby dodać punkt na mapie";
+            }
+            errorMessage.setText(errorMessageBuilder);
         }
 
     }

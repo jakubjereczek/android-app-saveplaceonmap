@@ -1,9 +1,11 @@
 package pl.edu.ug.saveplaceonmap.models;
 
+import pl.edu.ug.saveplaceonmap.utils.Consts;
+
 public enum Category {
-    FUN(""),
-    MY_FAVOURITE_PLACES("jedno z moich ukochanych miejsc"),
-    HOME("moj dom");
+    FUN(""+ Consts.FUN_DESCRIBE),
+    MY_FAVOURITE_PLACES(""+Consts.MY_FAVOURITE_PLACES_DESCRIBE),
+    HOME(""+Consts.HOME_DESCRIBE);
 
     private String description;
 
@@ -17,9 +19,11 @@ public enum Category {
 
     public static Category findByDescription(String description) {
         switch (description) {
-            case "miejsce rozrywkowe":
+            case Consts.FUN_DESCRIBE:
                 return FUN;
-            case "moj dom":
+            case Consts.MY_FAVOURITE_PLACES_DESCRIBE:
+                return MY_FAVOURITE_PLACES;
+            case Consts.HOME_DESCRIBE:
                 return HOME;
         }
         return null;

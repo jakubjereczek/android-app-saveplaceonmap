@@ -1,8 +1,6 @@
 package pl.edu.ug.saveplaceonmap.models;
 
-import java.io.Serializable;
-
-public class Location implements Serializable {
+public class Location {
 
     private float x;
     private float y;
@@ -32,5 +30,9 @@ public class Location implements Serializable {
 
     public String getDescription() {
         return description;
+    }
+
+    public Category getCategory() {
+        return category;
     }
 }

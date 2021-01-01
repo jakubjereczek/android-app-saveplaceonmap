@@ -2,6 +2,7 @@ package pl.edu.ug.saveplaceonmap.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.GsonBuilder;
 
@@ -40,6 +42,7 @@ public class MapAddLocationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_add_location);
         Bundle b = getIntent().getExtras();
+        ActionBar actionBar = getActionBar();
         x = b.getFloat("x");
         y = b.getFloat("y");
         title = findViewById(R.id.titleET);
@@ -63,7 +66,6 @@ public class MapAddLocationActivity extends AppCompatActivity {
         });
         button = findViewById(R.id.button);
     }
-
 
     public void addHandler(View view) {
         String titleString = title.getText().toString(),

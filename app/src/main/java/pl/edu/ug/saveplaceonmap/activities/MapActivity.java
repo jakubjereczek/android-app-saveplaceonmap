@@ -1,60 +1,46 @@
 package pl.edu.ug.saveplaceonmap.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.gson.GsonBuilder;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
-import org.osmdroid.config.IConfigurationProvider;
 import org.osmdroid.events.MapEventsReceiver;
-import org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.ItemizedIconOverlay;
-import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
 import org.osmdroid.views.overlay.MapEventsOverlay;
 import org.osmdroid.views.overlay.Marker;
-import org.osmdroid.views.overlay.OverlayItem;
+import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.ScaleBarOverlay;
 import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
-import org.osmdroid.views.overlay.infowindow.MarkerInfoWindow;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
-import org.osmdroid.views.overlay.simplefastpoint.LabelledGeoPoint;
-import org.osmdroid.views.overlay.simplefastpoint.SimpleFastPointOverlay;
 
-import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 import pl.edu.ug.saveplaceonmap.BuildConfig;
 import pl.edu.ug.saveplaceonmap.DataManager;
 import pl.edu.ug.saveplaceonmap.LocationList;
+import pl.edu.ug.saveplaceonmap.MyMarker;
 import pl.edu.ug.saveplaceonmap.R;
-import pl.edu.ug.saveplaceonmap.models.Category;
 import pl.edu.ug.saveplaceonmap.models.Location;
-
-import static com.google.android.material.internal.ContextUtils.getActivity;
 
 public class MapActivity extends AppCompatActivity {
 
@@ -68,6 +54,8 @@ public class MapActivity extends AppCompatActivity {
     boolean isLoaded = false;
     boolean tappedLocation = false;
     Context context;
+
+    int id = 0;
 
     ArrayList<Location> loadedLocations;
 
@@ -138,34 +126,65 @@ public class MapActivity extends AppCompatActivity {
         });
 
         // punkty na mapie
-        ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
-        for (int i=0; i<loadedLocations.size(); i++) {
-            Location location = (Location) loadedLocations.get(i);
-            items.add(new OverlayItem(location.getTitle(), "Opis: "+location.getDescription()+"\n Kategoria: "+location.getCategory().getDescription(), new GeoPoint(location.getX(),location.getY())));
+        ArrayList<Marker> items = new ArrayList<Marker>();
+        if (loadedLocations != null) {
+            for (int i = 0; i < loadedLocations.size(); i++) {
+                final Location location = (Location) loadedLocations.get(i);
+                MyMarker m = new MyMarker(map, location.getCategory(), context);
+                m.setId(Integer.toString(location.getId()));
+                m.setPosition(new GeoPoint(location.getX(), location.getY()));
+                m.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_TOP);
+                m.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
+
+                    @Override
+                    public boolean onMarkerClick(final Marker marker, MapView mapView) {
+                        final int id = Integer.parseInt(marker.getId());
+                        Location myLoc = locationList.findById(id);
+                        map.getController().animateTo(new GeoPoint(myLoc.getX() + 0.005, myLoc.getY()));
+
+                        final Dialog dialog = new Dialog(context);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+                        dialog.setContentView(R.layout.information_popup);
+                        TextView header = (TextView) dialog.findViewById(R.id.headerTV);
+                        header.setText(myLoc.getTitle());
+                        TextView category = (TextView) dialog.findViewById(R.id.categoryTV);
+                        category.setText(myLoc.getCategory().getDescription());
+                        TextView body = (TextView) dialog.findViewById(R.id.bodyTV);
+                        body.setText(myLoc.getDescription());
+                        dialog.show();
+
+                        ImageView close = (ImageView) dialog.findViewById(R.id.closeBtn);
+                        close.setOnClickListener((new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.cancel();
+                            }
+                        }));
+
+                        ImageView del = (ImageView) dialog.findViewById(R.id.deleteBtn);
+                        del.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                locationList.locations.remove(locationList.findById(id));
+                                for(int i=0;i<map.getOverlays().size();i++){
+                                    Overlay overlay= map.getOverlays().get(i);
+                                    if(overlay instanceof Marker&&((Marker) overlay).getId().equals(marker.getId())){
+                                        map.getOverlays().remove(overlay);
+                                    }
+                                }
+                                dataManager.updateDate(locationList);
+                                dialog.cancel();
+                            }
+                        });
+                        return true;
+                    }
+                });
+                m.setIcon();
+
+                map.getOverlays().add(m);
+            }
         }
-
-        //the overlay
-        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<OverlayItem>(items,
-                new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
-                    @Override
-                    public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
-                        Toast.makeText(context, "Nacisnieto na zakladne "+item.getTitle(), Toast.LENGTH_LONG).show();
-
-                        //do something
-                        tappedLocation = true;
-
-                        return false;
-                    }
-                    @Override
-                    public boolean onItemLongPress(final int index, final OverlayItem item) {
-                        Toast.makeText(context, "Przytrzymano na zakladce "+item.getTitle(), Toast.LENGTH_LONG).show();
-
-                        return false;
-                    }
-                }, this);
-        mOverlay.setFocusItemsOnTap(true);
-
-        map.getOverlays().add(mOverlay);
 
         MapEventsReceiver mReceive = new MapEventsReceiver() {
             // Nacisniecie na mape
@@ -178,8 +197,18 @@ public class MapActivity extends AppCompatActivity {
             @Override
             public boolean longPressHelper(GeoPoint p) {
                 // Otworzenie Activity z dodawaniem + przekazanie x,y.
+
+                // W przypadku gdy przechodzimy z widoku dodawnia odebranie obiektu ktory mamy dodać.
+                final Bundle b = getIntent().getExtras();
+                if (b != null) {
+                    String locationJsonString = b.getString("location");
+                    GsonBuilder builder = new GsonBuilder();
+                    locationToAdd = builder.create().fromJson(locationJsonString, Location.class);
+                }
+
                 Intent i = null;
                 i = new Intent(MapActivity.this, MapAddLocationActivity.class);
+                i.putExtra("id", id);
                 i.putExtra("x", (float)p.getLatitude());
                 i.putExtra("y", (float)p.getLongitude());
 
@@ -200,8 +229,6 @@ public class MapActivity extends AppCompatActivity {
 
     private ArrayList<Location> loadingData() {
         locationList = new LocationList("Location list");
-        LocationList locationList = new LocationList("Location list");
-
         // Zarządzanie danymi
         dataManager = new DataManager(this, locationList);
 
@@ -221,8 +248,16 @@ public class MapActivity extends AppCompatActivity {
         }
 
         dataManager.updateDate(locationList);
-        Log.i("Locations", "Lista pobranych danych: "+locationList.locations.size());
+        // Musimy tu pobiera id ostatniego elementu
+
+         //Ustawianie ID na poczatku
+        if (locationList.locations == null || locationList.locations.size() == 0) {
+            id = 0;
+        }else {
+            id = locationList.locations.get(locationList.locations.size() - 1).getId() +1;
+        }
         isLoaded = true;
+
         return locationList.locations;
 
     }

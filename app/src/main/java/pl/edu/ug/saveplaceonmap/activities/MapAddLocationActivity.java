@@ -32,6 +32,7 @@ public class MapAddLocationActivity extends AppCompatActivity {
     TextView errorMessage;
 
     float x, y;
+    int id;
 
     String selectedCategory = null;
 
@@ -45,6 +46,7 @@ public class MapAddLocationActivity extends AppCompatActivity {
         ActionBar actionBar = getActionBar();
         x = b.getFloat("x");
         y = b.getFloat("y");
+        id = b.getInt("id");
         title = findViewById(R.id.titleET);
         description = findViewById(R.id.descriptionET);
         category = findViewById(R.id.categorySpinner);
@@ -73,7 +75,7 @@ public class MapAddLocationActivity extends AppCompatActivity {
         errorMessage.setText("");
         if (!titleString.isEmpty() && !descriptionString.isEmpty() && !selectedCategory.isEmpty()) {
             Category category = Category.findByDescription(selectedCategory);
-            Location location = new Location(x,y,titleString,descriptionString, category);
+            Location location = new Location(id, x,y,titleString,descriptionString, category);
 
             // przekonwertowanie obiektu na string json
             GsonBuilder builder = new GsonBuilder();

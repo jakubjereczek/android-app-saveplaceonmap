@@ -1,0 +1,58 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bonuspack_bubble">
+
+    <TextView
+        android:id="@+id/headerTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="3dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/categoryTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/headerTV"
+        android:layout_alignLeft="@+id/headerTV"
+        android:text="TextView"
+        android:textColor="#630606"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/bodyTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/categoryTV"
+        android:layout_alignLeft="@+id/categoryTV"
+        android:layout_marginTop="5dp"
+        android:text="TextView"
+        android:textSize="14dp" />
+
+    <ImageView
+        android:id="@+id/closeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bodyTV"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:background="#00FFFFFF"
+        android:src="@android:drawable/ic_delete" />
+
+    <ImageView
+        android:id="@+id/deleteBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@id/closeBtn"
+        android:layout_alignBottom="@id/closeBtn"
+        android:background="#00FFFFFF"
+        android:src="@android:drawable/ic_menu_delete" />
+</RelativeLayout>

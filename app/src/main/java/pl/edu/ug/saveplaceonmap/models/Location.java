@@ -2,18 +2,24 @@ package pl.edu.ug.saveplaceonmap.models;
 
 public class Location {
 
+    private int id;
     private float x;
     private float y;
     private String title;
     private String description;
     private Category category;
 
-    public Location(float x, float y, String title, String description, Category category) {
+    public Location(int id, float x, float y, String title, String description, Category category) {
+        this.id = id;
         this.x = x;
         this.y = y;
         this.title = title;
         this.description = description;
         this.category = category;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public float getX() {
@@ -35,4 +41,5 @@ public class Location {
     public Category getCategory() {
         return category;
     }
+
 }

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/bonuspack_bubble">
+    android:background="@android:drawable/editbox_background">
 
     <TextView
         android:id="@+id/headerTV"
@@ -50,9 +50,9 @@
         android:id="@+id/deleteBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/closeBtn"
         android:layout_marginRight="10dp"
         android:layout_toLeftOf="@id/closeBtn"
-        android:layout_alignBottom="@id/closeBtn"
         android:background="#00FFFFFF"
         android:src="@android:drawable/ic_menu_delete" />
 </RelativeLayout>

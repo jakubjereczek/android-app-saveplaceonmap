@@ -36,6 +36,10 @@ dependencies {
     // Paczka potrzebna do przekowertowania danych JSON -> Objects i odwrotnie
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.google.android.material:material:1.2.1'
+    // layout 50/50
+    implementation 'com.android.support.constraint:constraint-layout:2.0.4'
+
+
 
 
 

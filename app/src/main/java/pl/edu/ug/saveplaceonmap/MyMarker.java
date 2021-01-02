@@ -1,6 +1,9 @@
 package pl.edu.ug.saveplaceonmap;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.MotionEvent;
@@ -25,7 +28,12 @@ public class MyMarker extends Marker {
 
     public void setIcon(){
         if (category!=null) {
-            mIcon=setIconByCategory(category.getDescription());
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) setIconByCategory(category.getDescription());
+            Bitmap bitmap = bitmapDrawable.getBitmap();
+            Drawable dr = new BitmapDrawable(context.getResources(),
+                    Bitmap.createScaledBitmap(bitmap, (int) (48.0f * context.getResources().getDisplayMetrics().density), (int) (48.0f * context.getResources().getDisplayMetrics().density), true));
+            mIcon= dr;
+            //mIcon = setIconByCategory(category.getDescription());
         }
     }
 

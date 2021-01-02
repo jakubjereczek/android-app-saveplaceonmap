@@ -88,7 +88,9 @@ public class MapActivity extends AppCompatActivity {
         map.setMultiTouchControls(true);
 
         final IMapController mapController = map.getController();
-        mapController.setZoom(15.0);
+        mapController.setZoom(16.0);
+        map.setMinZoomLevel(5.0);
+        map.setMaxZoomLevel(20.0);
 
         // skalowanie mapy
         final DisplayMetrics dm = this.getResources().getDisplayMetrics();
@@ -140,7 +142,7 @@ public class MapActivity extends AppCompatActivity {
                     public boolean onMarkerClick(final Marker marker, MapView mapView) {
                         final int id = Integer.parseInt(marker.getId());
                         Location myLoc = locationList.findById(id);
-                        map.getController().animateTo(new GeoPoint(myLoc.getX() + 0.005, myLoc.getY()));
+                        map.getController().animateTo(new GeoPoint(myLoc.getX(), myLoc.getY()));
 
                         final Dialog dialog = new Dialog(context);
                         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -223,6 +225,8 @@ public class MapActivity extends AppCompatActivity {
         CompassOverlay compassOverlay = new CompassOverlay(context, new InternalCompassOrientationProvider(context), map);
         compassOverlay.enableCompass();
         map.getOverlays().add(compassOverlay);
+
+
 
         map.invalidate();
     }

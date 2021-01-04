@@ -36,7 +36,7 @@ public class MapAddLocationActivity extends AppCompatActivity {
 
     String selectedCategory = null;
 
-    private String[] categories = new String[] { Category.FUN.getDescription(), Category.MY_FAVOURITE_PLACES.getDescription(), Category.HOME.getDescription(), Category.GROCERIES.getDescription(), Category.RESTAURANTS.getDescription(), Category.PLACES.getDescription()};
+    private final String[] categories = new String[] { Category.FUN.getDescription(), Category.MY_FAVOURITE_PLACES.getDescription(), Category.HOME.getDescription(), Category.GROCERIES.getDescription(), Category.RESTAURANTS.getDescription(), Category.PLACES.getDescription()};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -50,6 +50,7 @@ public class MapActivity extends AppCompatActivity {
     DataManager dataManager;
 
     Location locationToAdd = null;
+    GeoPoint move = null;
 
     boolean isLoaded = false;
     boolean tappedLocation = false;
@@ -58,6 +59,8 @@ public class MapActivity extends AppCompatActivity {
     int id = 0;
 
     ArrayList<Location> loadedLocations;
+
+    float openOnLocationX, openOnLocationY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +71,22 @@ public class MapActivity extends AppCompatActivity {
         final Bundle b = getIntent().getExtras();
         if (b != null) {
             String locationJsonString = b.getString("location");
-            GsonBuilder builder = new GsonBuilder();
-            locationToAdd = builder.create().fromJson(locationJsonString, Location.class);
+            // Przejscie z widoku dodawnia
+            if (locationJsonString != null) {
+                GsonBuilder builder = new GsonBuilder();
+                locationToAdd = builder.create().fromJson(locationJsonString, Location.class);
+                move = new GeoPoint(locationToAdd.getX(), locationToAdd.getY());
+            }else {
+                // Przejscie z widoku listy
+                boolean openOnLocation = b.getBoolean("openOnLocation");
+                if (openOnLocation) {
+                    Log.i("DANE", "Ustawiam x i y"+openOnLocation);
+
+                   move = new GeoPoint(b.getDouble("x"), b.getDouble("y"));
+
+                }
+            }
+
         }
 
         setContentView(R.layout.activity_map);
@@ -81,7 +98,7 @@ public class MapActivity extends AppCompatActivity {
         }
 
         // Implementacja map
-        map = (MapView) findViewById(R.id.map);
+        map = findViewById(R.id.map);
         map.getTileProvider().clearTileCache();
         Configuration.getInstance().setUserAgentValue(BuildConfig.APPLICATION_ID);
         map.setTileSource(TileSourceFactory.MAPNIK);
@@ -115,15 +132,23 @@ public class MapActivity extends AppCompatActivity {
                         @Override
                         public  void  run () {
                             if (b != null) {
-                                // Wyswietlanie ostatnio dodanego punktu
-                                map.getController().animateTo(new GeoPoint(locationToAdd.getX(), locationToAdd.getY()));
+                                // Przejscie do punkty z listy
+                                map.getController().animateTo(move);
+                                Log.i("DANE", "x"+move.getLatitude()+"Y"+move.getLongitude());
+//                                if (openOnLocationX != 0 && openOnLocationY != 0)
+//                                    map.getController().animateTo(new GeoPoint(openOnLocationX, openOnLocationY));
+//                                //}//else {
+//                                    // Wyswietlanie ostatnio dodanego punktu
+//                                     if (locationToAdd != null)
+//                                        map.getController().animateTo(new GeoPoint(locationToAdd.getX(), locationToAdd.getY()));
+                                //}
                             }else{
                                 // Przejscie do lokalizacji telefonu
                                 map.getController().animateTo(myLocation);
                             }
                         }
                     });
-                };
+                }
             }
         });
 
@@ -131,7 +156,7 @@ public class MapActivity extends AppCompatActivity {
         ArrayList<Marker> items = new ArrayList<Marker>();
         if (loadedLocations != null) {
             for (int i = 0; i < loadedLocations.size(); i++) {
-                final Location location = (Location) loadedLocations.get(i);
+                final Location location = loadedLocations.get(i);
                 MyMarker m = new MyMarker(map, location.getCategory(), context);
                 m.setId(Integer.toString(location.getId()));
                 m.setPosition(new GeoPoint(location.getX(), location.getY()));
@@ -148,15 +173,15 @@ public class MapActivity extends AppCompatActivity {
                         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
                         dialog.setContentView(R.layout.information_popup);
-                        TextView header = (TextView) dialog.findViewById(R.id.headerTV);
+                        TextView header = dialog.findViewById(R.id.headerTV);
                         header.setText(myLoc.getTitle());
-                        TextView category = (TextView) dialog.findViewById(R.id.categoryTV);
+                        TextView category = dialog.findViewById(R.id.categoryTV);
                         category.setText(myLoc.getCategory().getDescription());
-                        TextView body = (TextView) dialog.findViewById(R.id.bodyTV);
+                        TextView body = dialog.findViewById(R.id.bodyTV);
                         body.setText(myLoc.getDescription());
                         dialog.show();
 
-                        ImageView close = (ImageView) dialog.findViewById(R.id.closeBtn);
+                        ImageView close = dialog.findViewById(R.id.closeBtn);
                         close.setOnClickListener((new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -164,7 +189,7 @@ public class MapActivity extends AppCompatActivity {
                             }
                         }));
 
-                        ImageView del = (ImageView) dialog.findViewById(R.id.deleteBtn);
+                        ImageView del = dialog.findViewById(R.id.deleteBtn);
                         del.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -263,7 +288,6 @@ public class MapActivity extends AppCompatActivity {
         isLoaded = true;
 
         return locationList.locations;
-
     }
 
     @Override

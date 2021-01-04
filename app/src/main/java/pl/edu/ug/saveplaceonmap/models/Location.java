@@ -2,12 +2,12 @@ package pl.edu.ug.saveplaceonmap.models;
 
 public class Location {
 
-    private int id;
-    private double x;
-    private double y;
-    private String title;
-    private String description;
-    private Category category;
+    private final int id;
+    private final double x;
+    private final double y;
+    private final String title;
+    private final String description;
+    private final Category category;
 
     public Location(int id, double x, double y, String title, String description, Category category) {
         this.id = id;

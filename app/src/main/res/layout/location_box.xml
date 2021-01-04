@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/info_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="10dp"
+        android:layout_marginRight="5dip">
+
+        <ImageView
+            android:id="@+id/info_image"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:src="@drawable/heart" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/info_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/info_box"
+        android:layout_toRightOf="@+id/info_box"
+        android:text="TextView"
+        android:textColor="@color/secondaryDarkColor"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/info_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/info_category"
+        android:layout_toRightOf="@+id/info_box"
+        android:text="TextView"
+        android:textColor="@color/primaryDarkColor"
+        android:textSize="12sp"
+        android:textStyle="bold
+" />
+    <!--        android:layout_alignBaseline="@id/info_category"-->
+    <!--        android:layout_marginLeft="5dp"-->
+
+
+    <TextView
+        android:id="@+id/info_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/info_title"
+        android:layout_marginBottom="15dp"
+        android:layout_toRightOf="@+id/info_box"
+        android:text="TextView"
+
+        android:textColor="@color/primaryLightColor"
+        android:textSize="12sp" />
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/info_gotoBtn"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@id/info_description"-->
+    <!--        android:layout_alignParentRight="true"-->
+    <!--        android:layout_marginRight="10dp"-->
+    <!--        android:background="#00FFFFFF"-->
+    <!--        android:rotation="-90"-->
+    <!--        android:src="@android:drawable/ic_menu_more" />-->
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/info_deleteBtn"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignBottom="@id/info_gotoBtn"-->
+    <!--        android:layout_marginRight="10dp"-->
+    <!--        android:layout_toLeftOf="@id/info_gotoBtn"-->
+    <!--        android:background="#00FFFFFF"-->
+    <!--        android:src="@android:drawable/ic_menu_delete" />-->
+
+
+</RelativeLayout>

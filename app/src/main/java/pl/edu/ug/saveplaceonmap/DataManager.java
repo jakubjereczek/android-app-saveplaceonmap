@@ -20,10 +20,10 @@ public class DataManager {
 
     Context context;
     // < 10
-    private String pathDir = (Environment.getExternalStorageDirectory().getPath() + File.separator + "/data/");
-    private String pathFile = (Environment.getExternalStorageDirectory().getPath() + File.separator + "/data/locations2.json");
-    private String filename = "locs.json";
-    private String filepath = "dane";
+    private final String pathDir = (Environment.getExternalStorageDirectory().getPath() + File.separator + "/data/");
+    private final String pathFile = (Environment.getExternalStorageDirectory().getPath() + File.separator + "/data/locations2.json");
+    private final String filename = "locs.json";
+    private final String filepath = "dane";
 
 
     File file;

@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@android:drawable/editbox_background">
+    android:padding="10dp"
+    android:background="@drawable/popup">
 
     <TextView
         android:id="@+id/headerTV"
@@ -13,7 +14,8 @@
         android:layout_marginLeft="3dp"
         android:layout_marginTop="3dp"
         android:text="TextView"
-        android:textSize="18sp"
+        android:textColor="@color/secondaryTextColor"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <TextView
@@ -23,7 +25,7 @@
         android:layout_below="@+id/headerTV"
         android:layout_alignLeft="@+id/headerTV"
         android:text="TextView"
-        android:textColor="#630606"
+        android:textColor="@color/secondaryTextColor"
         android:textSize="16dp" />
 
     <TextView
@@ -34,6 +36,7 @@
         android:layout_alignLeft="@+id/categoryTV"
         android:layout_marginTop="5dp"
         android:text="TextView"
+        android:textColor="#484848"
         android:textSize="14dp" />
 
     <ImageView
@@ -51,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/closeBtn"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="5dp"
         android:layout_toLeftOf="@id/closeBtn"
         android:background="#00FFFFFF"
         android:src="@android:drawable/ic_menu_delete" />

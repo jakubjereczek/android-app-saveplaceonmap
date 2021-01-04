@@ -8,7 +8,7 @@ import pl.edu.ug.saveplaceonmap.models.Location;
 
 public class LocationList {
 
-    private String name;
+    private final String name;
     public ArrayList<Location> locations;
 
     public LocationList(String name) {

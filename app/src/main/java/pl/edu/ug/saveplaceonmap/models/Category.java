@@ -10,7 +10,7 @@ public enum Category {
     RESTAURANTS(""+Consts.RESTAURANTS_DESCRIBE),
     PLACES(""+Consts.PLACES_DESCRIBE);
 
-    private String description;
+    private final String description;
 
     Category(String description) {
         this.description = description;
@@ -37,6 +37,9 @@ public enum Category {
         }
         return null;
     }
+
+
+
 }
 
 

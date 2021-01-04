@@ -15,7 +15,7 @@ import org.osmdroid.views.overlay.Marker;
 import pl.edu.ug.saveplaceonmap.models.Category;
 import pl.edu.ug.saveplaceonmap.utils.Consts;
 
-public class MyMarker extends Marker {
+public class  MyMarker extends Marker {
 
     Category category;
     Context context;
@@ -28,7 +28,7 @@ public class MyMarker extends Marker {
 
     public void setIcon(){
         if (category!=null) {
-            BitmapDrawable bitmapDrawable = (BitmapDrawable) setIconByCategory(category.getDescription());
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) setIconByCategory(category.getDescription(), context);
             Bitmap bitmap = bitmapDrawable.getBitmap();
             Drawable dr = new BitmapDrawable(context.getResources(),
                     Bitmap.createScaledBitmap(bitmap, (int) (48.0f * context.getResources().getDisplayMetrics().density), (int) (48.0f * context.getResources().getDisplayMetrics().density), true));
@@ -37,7 +37,7 @@ public class MyMarker extends Marker {
         }
     }
 
-    private Drawable setIconByCategory(String category) {
+    static Drawable setIconByCategory(String category, Context context) {
         Drawable drawable;
         switch (category) {
             case Consts.FUN_DESCRIBE:

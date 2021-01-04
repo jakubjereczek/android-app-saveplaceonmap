@@ -4,55 +4,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primaryLightColor"
     tools:context=".activities.MapAddLocationActivity">
+
+    <TextView
+        android:id="@+id/addNewLocationTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="60dp"
+        android:paddingBottom="60dp"
+        android:text="@string/addNewLocation"
+        android:textAlignment="center"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="26dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#fff"
+        android:background="@color/primaryLightColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="84dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="85dp"
-            android:text="@string/add_new"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/addNewLocationTV"
+        app:layout_constraintVertical_bias="1.0">
 
         <EditText
             android:id="@+id/titleET"
             android:layout_width="0dp"
             android:layout_height="45dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="36dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="@color/secondaryColor"
             android:ems="10"
             android:hint="Title"
             android:inputType="text"
+            android:padding="10dp"
+            android:textColor="@color/primaryDarkColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <EditText
             android:id="@+id/descriptionET"
             android:layout_width="0dp"
             android:layout_height="45dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="26dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="@color/secondaryColor"
             android:ems="10"
             android:gravity="start|top"
             android:hint="Description"
             android:inputType="textMultiLine"
+            android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleET" />
@@ -61,10 +72,13 @@
             android:id="@+id/categorySpinner"
             android:layout_width="0dp"
             android:layout_height="45dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="26dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="@color/secondaryColor"
             android:hint="Category"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/descriptionET" />
@@ -73,8 +87,9 @@
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
-            android:layout_marginTop="21dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:background="@color/secondaryColor"
             android:onClick="addHandler"
             android:text="@string/addBtn"
             app:layout_constraintEnd_toEndOf="parent"
@@ -84,9 +99,10 @@
             android:id="@+id/errorMessageTV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginTop="2dp"
-            android:textColor="#B71C1C"
+            android:textColor="#fff"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/categorySpinner" />

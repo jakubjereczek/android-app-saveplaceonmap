@@ -1,8 +1,25 @@
 <resources>
     <string name="app_name">Save place on map</string>
-    <string name="map">Wyświetl mape</string>
-    <string name="locations">Wyświetl zapisane lokalizacje</string>
-    <string name="addBtn">Dodaj</string>
-    <string name="locationsActivityTitle">Nie zapisałeś jeszcze ani jednej lokalizacji</string>
-    <string name="addNewLocation">Dodawanie nowej lokalizacji do mapy</string>
+    <string name="map">View the map</string>
+    <string name="locations">View saved locations</string>
+    <string name="addBtn">Add</string>
+    <string name="locationsActivityTitle">You havent saved any single location</string>
+    <string name="addNewLocation">Adding a new location to map</string>
+
+    <string name="location_to_add_title">title</string>
+    <string name="location_to_add_des">description</string>
+    <string name="location_to_add_category">category</string>
+    <string name="location_to_add_field">The field</string>
+    <string name="location_to_add_fields">The fields</string>
+    <string name="location_to_error_msg"> is empty or the value is less than 3 characters. Complete them to add a point on the map.</string>
+    <string name="location_to_error_msg_many"> are empty or the value is less than 3 characters. Complete them to add a point on the map.</string>
+
+    <string name="FUN">Entertainment places</string>
+    <string name="MY_FAVOURITE_PLACES">Favourite places</string>
+    <string name="HOME">Home</string>
+    <string name="GROCERIES">Shops</string>
+    <string name="RESTAURANTS">Restaurants and bars</string>
+    <string name="PLACES">Places to go out</string>
 </resources>
+
+

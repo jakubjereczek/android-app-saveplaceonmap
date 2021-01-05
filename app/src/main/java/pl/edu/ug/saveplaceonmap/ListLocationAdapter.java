@@ -3,6 +3,7 @@ package pl.edu.ug.saveplaceonmap;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 
 import pl.edu.ug.saveplaceonmap.activities.MapActivity;
 import pl.edu.ug.saveplaceonmap.activities.MapAddLocationActivity;
+import pl.edu.ug.saveplaceonmap.models.Category;
 import pl.edu.ug.saveplaceonmap.models.Location;
 
 public class ListLocationAdapter extends ArrayAdapter<Location> {
@@ -53,12 +55,12 @@ public class ListLocationAdapter extends ArrayAdapter<Location> {
         final Location loc = getItem(position);
 
         ImageView image = listItem.findViewById(R.id.info_image);
-        Drawable icon = (MyMarker.setIconByCategory(getItem(position).getCategory().getDescription(), context));
+        Drawable icon = (MyMarker.setIconByCategoryId(getItem(position).getCategory().getId(), context));
         image.setImageDrawable(icon);
         TextView title = listItem.findViewById(R.id.info_title);
         title.setText(loc.getTitle());
         TextView category = listItem.findViewById(R.id.info_category);
-        category.setText(loc.getCategory().getDescription());
+        category.setText(Category.getName(context, loc.getCategory()));
         TextView description = listItem.findViewById(R.id.info_description);
         description.setText(loc.getDescription());
         listItem.setOnClickListener(new View.OnClickListener() {

@@ -3,6 +3,7 @@ package pl.edu.ug.saveplaceonmap.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -35,13 +36,23 @@ public class MapAddLocationActivity extends AppCompatActivity {
     int id;
 
     String selectedCategory = null;
+    int selectedCategoryId = 0;
 
-    private final String[] categories = new String[] { Category.FUN.getDescription(), Category.MY_FAVOURITE_PLACES.getDescription(), Category.HOME.getDescription(), Category.GROCERIES.getDescription(), Category.RESTAURANTS.getDescription(), Category.PLACES.getDescription()};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_add_location);
+        Context context = this;
+        final String[] categories = new String[]{
+                Category.getName(context, Category.FUN),
+                Category.getName(context, Category.MY_FAVOURITE_PLACES),
+                Category.getName(context, Category.HOME),
+                Category.getName(context, Category.GROCERIES),
+                Category.getName(context, Category.RESTAURANTS),
+                Category.getName(context, Category.PLACES)
+        };
+
         Bundle b = getIntent().getExtras();
         ActionBar actionBar = getActionBar();
         x = b.getFloat("x");
@@ -52,13 +63,14 @@ public class MapAddLocationActivity extends AppCompatActivity {
         category = findViewById(R.id.categorySpinner);
         errorMessage = findViewById(R.id.errorMessageTV);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, categories);
+                android.R.layout.simple_spinner_dropdown_item, categories);
         category.setAdapter(adapter);
 
         category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedCategory = categories[position];
+                selectedCategoryId = position;
             }
 
             @Override
@@ -74,7 +86,7 @@ public class MapAddLocationActivity extends AppCompatActivity {
                 descriptionString = description.getText().toString();
         errorMessage.setText("");
         if (!titleString.isEmpty() && !descriptionString.isEmpty() && !selectedCategory.isEmpty()) {
-            Category category = Category.findByDescription(selectedCategory);
+            Category category = Category.getById(selectedCategoryId);
             Location location = new Location(id, x,y,titleString,descriptionString, category);
 
             // przekonwertowanie obiektu na string json
@@ -91,22 +103,22 @@ public class MapAddLocationActivity extends AppCompatActivity {
             int incorrectFields = 0;
             String[] fields = new String[3];
             if (titleString.isEmpty() || titleString.length() < 3) {
-                fields[0] = "tytuł";
+                fields[0] = getApplicationContext().getResources().getString(R.string.location_to_add_title);
                 incorrectFields++;
             }
             if (descriptionString.isEmpty() || descriptionString.length() < 3) {
-                fields[1] = "opis";
+                fields[1] = getApplicationContext().getResources().getString(R.string.location_to_add_des);
                 incorrectFields++;
             }
             if (selectedCategory.isEmpty() || selectedCategory.length() < 3) {
-                fields[2] = "kategoria";
+                fields[2] = getApplicationContext().getResources().getString(R.string.location_to_add_category);
                 incorrectFields++;
             }
             String errorMessageBuilder = "";
             if (incorrectFields > 1) {
-                errorMessageBuilder = "Pola";
+                errorMessageBuilder = getApplicationContext().getResources().getString(R.string.location_to_add_field);
             }else{
-                errorMessageBuilder = "Pole";
+                errorMessageBuilder =getApplicationContext().getResources().getString(R.string.location_to_add_fields);
             }
             for (int i = 0; i<fields.length; i++) {
                 if (fields[i] != "" && fields[i] != null) {
@@ -116,9 +128,9 @@ public class MapAddLocationActivity extends AppCompatActivity {
                 }
             }
             if (incorrectFields > 1) {
-                errorMessageBuilder += " są puste albo wartość jest krótsza niż 3 znaki. Uzupełnij je aby dodać punkt na mapie";
+                errorMessageBuilder += " "+getApplicationContext().getResources().getString(R.string.location_to_error_msg);
             }else{
-                errorMessageBuilder += " jest puste albo wartość jest krótsza niz 3 znaki. Uzupełnij pole aby dodać punkt na mapie";
+                errorMessageBuilder += " "+getApplicationContext().getResources().getString(R.string.location_to_error_msg_many);
             }
             errorMessage.setText(errorMessageBuilder);
         }

@@ -1,45 +1,49 @@
 package pl.edu.ug.saveplaceonmap.models;
 
+import android.content.Context;
+import android.content.res.Resources;
+
+import pl.edu.ug.saveplaceonmap.R;
 import pl.edu.ug.saveplaceonmap.utils.Consts;
 
 public enum Category {
-    FUN(""+ Consts.FUN_DESCRIBE),
-    MY_FAVOURITE_PLACES(""+Consts.MY_FAVOURITE_PLACES_DESCRIBE),
-    HOME(""+Consts.HOME_DESCRIBE),
-    GROCERIES(""+ Consts.GROCERIES_DESCRIBE),
-    RESTAURANTS(""+Consts.RESTAURANTS_DESCRIBE),
-    PLACES(""+Consts.PLACES_DESCRIBE);
+    FUN(R.string.FUN, Consts.FUN_ID),
+    MY_FAVOURITE_PLACES(R.string.MY_FAVOURITE_PLACES, Consts.MY_FAVOURITE_PLACES_ID),
+    HOME(R.string.HOME, Consts.HOME_ID),
+    GROCERIES(R.string.GROCERIES, Consts.GROCERIES_ID),
+    RESTAURANTS(R.string.RESTAURANTS, Consts.RESTAURANTS_ID),
+    PLACES(R.string.PLACES, Consts.PLACES_ID);
 
-    private final String description;
+    private int idResources;
+    private int id;
 
-    Category(String description) {
-        this.description = description;
+    Category(int idResources, int id) {
+        this.idResources = idResources;
+        this.id = id;
     }
 
-    public String getDescription() {
-        return description;
+    public int getResourceId() {
+        return idResources;
     }
 
-    public static Category findByDescription(String description) {
-        switch (description) {
-            case Consts.FUN_DESCRIBE:
-                return FUN;
-            case Consts.MY_FAVOURITE_PLACES_DESCRIBE:
-                return MY_FAVOURITE_PLACES;
-            case Consts.HOME_DESCRIBE:
-                return HOME;
-            case Consts.GROCERIES_DESCRIBE:
-                return GROCERIES;
-            case Consts.RESTAURANTS_DESCRIBE:
-                return RESTAURANTS;
-            case Consts.PLACES_DESCRIBE:
-                return PLACES;
+    public static Category getById(int id) {
+        for(Category category : values()) {
+            if(category.id == id) {
+                return category;
+            }
         }
         return null;
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public static String getName(Context context, Category category) {
+        Resources res = context.getResources();
+        String categoryName = res.getString(category.getResourceId());
+        return categoryName;
+    }
 
 }
-
 

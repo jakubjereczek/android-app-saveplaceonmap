@@ -28,7 +28,7 @@ public class  MyMarker extends Marker {
 
     public void setIcon(){
         if (category!=null) {
-            BitmapDrawable bitmapDrawable = (BitmapDrawable) setIconByCategory(category.getDescription(), context);
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) setIconByCategoryId(category.getId(), context);
             Bitmap bitmap = bitmapDrawable.getBitmap();
             Drawable dr = new BitmapDrawable(context.getResources(),
                     Bitmap.createScaledBitmap(bitmap, (int) (48.0f * context.getResources().getDisplayMetrics().density), (int) (48.0f * context.getResources().getDisplayMetrics().density), true));
@@ -37,10 +37,10 @@ public class  MyMarker extends Marker {
         }
     }
 
-    static Drawable setIconByCategory(String category, Context context) {
+    static Drawable setIconByCategoryId(int categoryId, Context context) {
         Drawable drawable;
-        switch (category) {
-            case Consts.FUN_DESCRIBE:
+        switch (categoryId) {
+            case Consts.FUN_ID:
 //                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //                    drawable = context.getDrawable(R.drawable.burger);
 //                } else {
@@ -48,19 +48,19 @@ public class  MyMarker extends Marker {
 //                }
                 drawable = context.getDrawable(R.drawable.star);
                 break;
-            case Consts.MY_FAVOURITE_PLACES_DESCRIBE:
+            case Consts.MY_FAVOURITE_PLACES_ID:
                 drawable = context.getDrawable(R.drawable.heart);
                 break;
-            case Consts.HOME_DESCRIBE:
+            case Consts.HOME_ID:
                 drawable = context.getDrawable(R.drawable.home);
                 break;
-            case Consts.GROCERIES_DESCRIBE:
+            case Consts.GROCERIES_ID:
                 drawable = context.getDrawable(R.drawable.bag);
                 break;
-            case Consts.RESTAURANTS_DESCRIBE:
+            case Consts.RESTAURANTS_ID:
                 drawable = context.getDrawable(R.drawable.burger);
                 break;
-            case Consts.PLACES_DESCRIBE:
+            case Consts.PLACES_ID:
                 drawable = context.getDrawable(R.drawable.fun);
                 break;
             default:

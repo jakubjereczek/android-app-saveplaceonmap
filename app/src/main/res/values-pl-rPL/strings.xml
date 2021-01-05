@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Save place on map</string>
+    <string name="map">Wyświetl mape</string>
+    <string name="locations">Wyświetl zapisane lokalizacje</string>
+    <string name="addBtn">Dodaj</string>
+    <string name="locationsActivityTitle">Nie zapisałeś jeszcze ani jednej lokalizacji</string>
+    <string name="addNewLocation">Dodawanie nowej lokalizacji do mapy</string>
+
+    <string name="location_to_add_title">tytuł</string>
+    <string name="location_to_add_des">opis</string>
+    <string name="location_to_add_category">kategoria</string>
+    <string name="location_to_add_field">Pole</string>
+    <string name="location_to_add_fields">Pola</string>
+    <string name="location_to_error_msg"> jest puste albo wartość jest krótsza niż 3 znaki. Uzupełnij je aby dodać punkt na mapie.</string>
+    <string name="location_to_error_msg_many"> są puste albo wartość jest krótsza niż 3 znaki. Uzupełnij je aby dodać punkt na mapie.</string>
+
+    <string name="FUN">Entertainment places</string>
+    <string name="MY_FAVOURITE_PLACES">Miejsce rozrywkowe</string>
+    <string name="HOME">Dom</string>
+    <string name="GROCERIES">Sklepy, obiekty handlowe</string>
+    <string name="RESTAURANTS">Restauracje, bary</string>
+    <string name="PLACES">Miejsca na wyjscie</string>
+
+</resources>

@@ -2,12 +2,11 @@ package pl.edu.ug.saveplaceonmap.utils;
 
 public final class Consts {
 
-    public static final String FUN_DESCRIBE = "Miejsce rozrywkowe";
-    public static final String MY_FAVOURITE_PLACES_DESCRIBE = "Ulubione miejsca";
-    public static final String HOME_DESCRIBE = "Dom";
-    public static final String GROCERIES_DESCRIBE = "Sklepy, obiekty handlowe";
-    public static final String RESTAURANTS_DESCRIBE = "Restauracje, bary";
-    public static final String PLACES_DESCRIBE = "Miejsca na wyjścia";
-
+    public static final int FUN_ID = 0;
+    public static final int MY_FAVOURITE_PLACES_ID = 1;
+    public static final int HOME_ID = 2;
+    public static final int GROCERIES_ID = 3;
+    public static final int RESTAURANTS_ID = 4;
+    public static final int PLACES_ID = 5;
 
 }

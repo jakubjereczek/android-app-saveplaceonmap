@@ -22,6 +22,7 @@ import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.events.MapEventsReceiver;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.Distance;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.MapEventsOverlay;
@@ -40,6 +41,7 @@ import pl.edu.ug.saveplaceonmap.DataManager;
 import pl.edu.ug.saveplaceonmap.LocationList;
 import pl.edu.ug.saveplaceonmap.MyMarker;
 import pl.edu.ug.saveplaceonmap.R;
+import pl.edu.ug.saveplaceonmap.models.Category;
 import pl.edu.ug.saveplaceonmap.models.Location;
 
 public class MapActivity extends AppCompatActivity {
@@ -176,7 +178,7 @@ public class MapActivity extends AppCompatActivity {
                         TextView header = dialog.findViewById(R.id.headerTV);
                         header.setText(myLoc.getTitle());
                         TextView category = dialog.findViewById(R.id.categoryTV);
-                        category.setText(myLoc.getCategory().getDescription());
+                        category.setText(Category.getName(context, myLoc.getCategory()));
                         TextView body = dialog.findViewById(R.id.bodyTV);
                         body.setText(myLoc.getDescription());
                         dialog.show();

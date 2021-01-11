@@ -25,6 +25,7 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.Distance;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.CopyrightOverlay;
 import org.osmdroid.views.overlay.MapEventsOverlay;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Overlay;
@@ -32,6 +33,7 @@ import org.osmdroid.views.overlay.ScaleBarOverlay;
 import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
+import org.osmdroid.views.overlay.mylocation.IMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import java.util.ArrayList;
@@ -55,14 +57,11 @@ public class MapActivity extends AppCompatActivity {
     GeoPoint move = null;
 
     boolean isLoaded = false;
-    boolean tappedLocation = false;
     Context context;
 
     int id = 0;
 
     ArrayList<Location> loadedLocations;
-
-    float openOnLocationX, openOnLocationY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,10 +81,7 @@ public class MapActivity extends AppCompatActivity {
                 // Przejscie z widoku listy
                 boolean openOnLocation = b.getBoolean("openOnLocation");
                 if (openOnLocation) {
-                    Log.i("DANE", "Ustawiam x i y"+openOnLocation);
-
                    move = new GeoPoint(b.getDouble("x"), b.getDouble("y"));
-
                 }
             }
 
@@ -120,33 +116,30 @@ public class MapActivity extends AppCompatActivity {
 
         // lokalizacja
         final MyLocationNewOverlay myLocationNewOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(context), map);
-        //myLocationNewOverlay.enableFollowLocation();
+        //myLocationNewOverlay.enableFollowLocation(); // sprawdzic do koncas
         myLocationNewOverlay.enableMyLocation();
         map.getOverlays().add(myLocationNewOverlay);
 
         // Przejscie do lokalizacji telefonu albo dodanego punktyu
+
         myLocationNewOverlay.runOnFirstFix(new Runnable () {
             @Override
             public void run () {
-                final GeoPoint myLocation = myLocationNewOverlay.getMyLocation();
+                final android.location.Location myLocation = myLocationNewOverlay.getMyLocationProvider().getLastKnownLocation();
                 if (myLocation != null) {
                     runOnUiThread(new Runnable () {
                         @Override
                         public  void  run () {
                             if (b != null) {
-                                // Przejscie do punkty z listy
+                                // Przejscie do punkty z listy, albo swiezo dodanego
                                 map.getController().animateTo(move);
                                 Log.i("DANE", "x"+move.getLatitude()+"Y"+move.getLongitude());
-//                                if (openOnLocationX != 0 && openOnLocationY != 0)
-//                                    map.getController().animateTo(new GeoPoint(openOnLocationX, openOnLocationY));
-//                                //}//else {
-//                                    // Wyswietlanie ostatnio dodanego punktu
-//                                     if (locationToAdd != null)
-//                                        map.getController().animateTo(new GeoPoint(locationToAdd.getX(), locationToAdd.getY()));
-                                //}
                             }else{
+                                GeoPoint myLocationGP = new GeoPoint(0,0);
+                                        myLocationGP.setCoords(myLocation.getLatitude(), myLocation.getLongitude());
+
                                 // Przejscie do lokalizacji telefonu
-                                map.getController().animateTo(myLocation);
+                                map.getController().animateTo(myLocationGP);
                             }
                         }
                     });
@@ -210,6 +203,9 @@ public class MapActivity extends AppCompatActivity {
                     }
                 });
                 m.setIcon();
+
+                CopyrightOverlay mCopyrightOverlay = new CopyrightOverlay(context);
+                map.getOverlays().add(mCopyrightOverlay);
 
                 map.getOverlays().add(m);
             }
@@ -296,8 +292,7 @@ public class MapActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
     }
-
-    // Pozbycie się blędu z niepoprawnym odsieżaniem przy cofaniu do aktywności.
+    // Pozbycie się blędu z niepoprawnym odświezaniem przy cofaniu do aktywności.
     @Override
     public void onBackPressed() {
         Intent i = null;

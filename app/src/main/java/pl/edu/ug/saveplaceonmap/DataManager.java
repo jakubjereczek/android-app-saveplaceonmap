@@ -21,7 +21,7 @@ public class DataManager {
     Context context;
     // < 10
     private final String pathDir = (Environment.getExternalStorageDirectory().getPath() + File.separator + "/data/");
-    private final String pathFile = (Environment.getExternalStorageDirectory().getPath() + File.separator + "/data/locations2.json");
+    private final String pathFile = (Environment.getExternalStorageDirectory().getPath() + File.separator + "/data/locs.json");
     private final String filename = "locs.json";
     private final String filepath = "dane";
 
@@ -39,46 +39,23 @@ public class DataManager {
             file = new File(pathFile);
             folder = new File(pathDir);
         }
-//        if (!isExternalStorageEnabledForRW()) {
-//
-//        }
-    }
-
-    public boolean isExternalStorageEnabledForRW() {
-//        String extStorageState = Environment.getExternalStorageState();
-//        if (extStorageState.equals(Environment.MEDIA_MOUNTED)) {
-//            return true;
-//        }
-        return false;
     }
 
     // < 10
-    public void createFile() {
-        Log.i("MOJE", "Tworzenie pliku");
-        try {
+    public void createFile() { try {
             if (!file.exists()) {
-                Log.i("MOJE", "Tworzenie plik");
-
                 file.createNewFile();
             }
         }catch (Exception e){
-            Log.i("MOJE", "Blad przy tworzeniu pliku"+e.getMessage());
-
             e.printStackTrace();
         }
     }
     // < 10
     public void createDir() {
-        Log.i("MOJE", "Tworzenie folderu");
-
         if (!folder.exists()) {
             try {
-                Log.i("MOJE", "Utworzono folder");
-
                 folder.mkdir();
             }catch (Exception ex) {
-                Log.i("MOJE", "Blad przy tworzeniu folderu"+ex.getMessage());
-
                 ex.printStackTrace();
             }
         }
@@ -100,8 +77,6 @@ public class DataManager {
             }catch (Exception ex) {
                 ex.printStackTrace();
             }
-            Log.i("MOJE", "Dodano");
-
         // < 10
         }else {
             try {
@@ -117,7 +92,7 @@ public class DataManager {
             fileOutputStream.close();
 
             }catch (Exception ex) {
-
+                ex.printStackTrace();
             }
         }
 
@@ -156,7 +131,6 @@ public class DataManager {
                 fileReader = new FileReader(file);
                 bufferedReader = new BufferedReader(fileReader);
                 StringBuilder stringBuilder = new StringBuilder();
-
 
                 String line = bufferedReader.readLine();
                 while (line != null) {

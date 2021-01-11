@@ -14,8 +14,8 @@
     <string name="location_to_error_msg"> jest puste albo wartość jest krótsza niż 3 znaki. Uzupełnij je aby dodać punkt na mapie.</string>
     <string name="location_to_error_msg_many"> są puste albo wartość jest krótsza niż 3 znaki. Uzupełnij je aby dodać punkt na mapie.</string>
 
-    <string name="FUN">Entertainment places</string>
-    <string name="MY_FAVOURITE_PLACES">Miejsce rozrywkowe</string>
+    <string name="FUN">Miejsce rozrywkowe</string>
+    <string name="MY_FAVOURITE_PLACES">Moje ulubione miejsca</string>
     <string name="HOME">Dom</string>
     <string name="GROCERIES">Sklepy, obiekty handlowe</string>
     <string name="RESTAURANTS">Restauracje, bary</string>

@@ -44,14 +44,7 @@ public class LocationsActivity extends AppCompatActivity {
         DataManager dataManager = new DataManager(this, locationList);
         locationList.locations = dataManager.getList();
         if (locationList.locations != null) {
-            Log.i("TAK", "Ustawiam listView - Visible, Title - Gone");
-//            listView.setVisibility(View.VISIBLE);
-//            locationTitle.setVisibility(View.GONE);
             loadData();
-        }else {
-            Log.i("TAK", "Ustawiam listView - Gone, Title - Visible");
-//            listView.setVisibility(View.GONE);
-//            locationTitle.setVisibility(View.VISIBLE);
         }
     }
 
